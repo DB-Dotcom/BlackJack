@@ -647,152 +647,214 @@ const franzoesischesBlatt = [
     },
 ]
 
-  // ----------------------------------------- game code ------------------------------------------------------------------
+// ----------------------------------------- game code ------------------------------------------------------------------
   
+import readline from 'node:readline'
   
-  import readline from "node:readline";
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+})
 
-  // Einrichten der Readline-Schnittstelle für Benutzereingaben und -ausgaben
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-  });
-  
-  // Deklaration der Spielvariablen
-  const spielerHand = [];   // Hier werden die Karten des Spielers gespeichert.
-  const dealerHand = [];    // Hier werden die Karten des Dealers gespeichert.
-  const deck = [...franzoesischesBlatt];  // Das Deck enthält alle Karten, zu Beginn eine Kopie des französischen Blatts.
-  let spielerPunkte = 0;  // Die Gesamtpunktzahl des Spielers.
-  let dealerPunkte = 0;   // Die Gesamtpunktzahl des Dealers.
-  let spielerDeposit = 0; // Das Startguthaben des Spielers.
-  let spielerEinsatz = 0; // Der Einsatz des Spielers.
-  let spielerGewinn = 0;  // Der Gewinn des Spielers.
-  let spielerVerlust = 0; // Der Verlust des Spielers.
-  let spielerKonto = 0;   // Das aktuelle Guthaben des Spielers.
+// ---------------------------------------- variable  -----------------------------------------------------------
+
+/* let spielerHand = [] // Hier werden die Karten des Spielers gespeichert.
+let dealerHand = [] // Hier werden die Karten des Dealers gespeichert.
+let deck = [...franzoesischesBlatt] // Das Deck enthält alle Karten, zu Beginn eine Kopie des französischen Blatts.
+let spielerPunkte = 0 // Die Gesamtpunktzahl des Spielers.
+let dealerPunkte = 0 // Die Gesamtpunktzahl des Dealers.
+ */
+let spielerHand = [];
+let dealerHand = [];
+let deck = [...franzoesischesBlatt];
+let spielerPunkte = 0;
+let dealerPunkte = 0;
+let spielerCoins = 1000; // Starteinlage des Spielers
+let aktuellerEinsatz = 10; // Der Standard-Einsatz zu Beginn
 
 
-  
-  // Die obigen Variablen initialisieren das Spiel und speichern den Spielstand.
-  
-  // Funktion zur Auswahl einer zufälligen Karte aus dem Deck
-  function randomKarte() {
-    const randomIndex = Math.floor(Math.random() * deck.length);
-    return deck.splice(randomIndex, 1)[0];  // Zieht eine zufällige Karte aus dem Deck und entfernt sie daraus.
+//***************************************************************** end
+
+// ---------------------------------------- functions game logic -----------------------------------------------------------
+function randomKarte () {
+  const randomIndex = Math.floor(Math.random() * deck.length)
+  return deck.splice(randomIndex, 1)[0] // Zieht eine zufällige Karte aus dem Deck und entfernt sie daraus.
+}
+
+function berechnePunkte (hand) {
+  return hand.reduce((sum, karte) => sum + karte.wert, 0) // Berechnet die Gesamtpunktzahl einer Hand.
+}
+
+function zeigeSpielerHand () {
+  spielerHand.forEach(karte => console.log(karte.bild)) // Zeigt die Karten in der Spielerhand.
+  console.log(`Spielerpunkte: ${spielerPunkte}`) // Zeigt die Gesamtpunktzahl des Spielers.
+}
+
+function zeigeDealerHand () {
+  console.log('Dealerhand:')
+  dealerHand.forEach(karte => console.log(karte.bild)) // Zeigt die Karten in der Dealerhand.
+  console.log(`Dealerpunkte: ${dealerPunkte}`) // Zeigt die Gesamtpunktzahl des Dealers.
+}
+
+function dealerZug () {
+  while (dealerPunkte < 17) {
+    const karte = randomKarte()
+    dealerHand.push(karte) // Der Dealer zieht Karten, bis er mindestens 17 Punkte hat.
+    dealerPunkte = berechnePunkte(dealerHand)
   }
-  
-  // Funktion zur Berechnung der Gesamtpunktzahl einer Hand
-  function berechnePunkte(hand) {
-    return hand.reduce((sum, karte) => sum + karte.wert, 0);
-  }
-  
-  // Funktion zur Anzeige der Karten in der Spielerhand
-  function zeigeSpielerHand() {
-    spielerHand.forEach(karte => console.log(karte.bild));  // Zeigt die Karten in der Spielerhand.
-    console.log(`Spielerpunkte: ${spielerPunkte}`);  // Zeigt die Gesamtpunktzahl des Spielers.
-  }
-  
-  // Funktion zur Anzeige der Karten in der Dealerhand
-  function zeigeDealerHand() {
-    console.log('Dealerhand:');
-    dealerHand.forEach(karte => console.log(karte.bild));  // Zeigt die Karten in der Dealerhand.
-    console.log(`Dealerpunkte: ${dealerPunkte}`);  // Zeigt die Gesamtpunktzahl des Dealers.
-  }
-  
-  // Funktion für den Dealerzug
-  function dealerZug() {
-    while (dealerPunkte < 17) {
-      const karte = randomKarte();
-      dealerHand.push(karte);  // Der Dealer zieht Karten, bis er mindestens 17 Punkte hat.
-      dealerPunkte = berechnePunkte(dealerHand);
+  zeigeDealerHand()
+}
+
+// ******************************************************************** end
+
+/* function neustart () {
+  spielerHand = []
+  dealerHand = []
+  deck = [...franzoesischesBlatt] // Setzt das Spiel zurück, um eine neue Runde zu starten.
+  spielerPunkte = 0
+  dealerPunkte = 0
+  starteSpiel() // Startet ein neues Spiel.
+}
+ */
+function neustart() {
+  spielerHand = [];
+  dealerHand = [];
+  deck = [...franzoesischesBlatt];
+  spielerPunkte = 0;
+  dealerPunkte = 0;
+  aktuellerEinsatz = 10; // Setzt den Einsatz auf den Standardwert zurück
+  starteSpiel();
+}
+
+
+
+function beendeSpiel () {
+  rl.question('Möchtest du nochmal spielen? (ja/nein): ', antwort => {
+    if (antwort.toLowerCase() === 'ja') {
+      neustart() // Startet ein neues Spiel, wenn der Spieler "ja" sagt.
+    } else {
+      console.log('Spiel beendet. Auf Wiedersehen!')
+      rl.close() // Beendet das Spiel, wenn der Spieler "nein" sagt.
     }
-    zeigeDealerHand();
-  }
-  
-  // Funktion zur Initialisierung eines neuen Spiels
-  function neustart() {
-    spielerHand = [];
-    dealerHand = [];
-    deck = [...franzoesischesBlatt];  // Setzt das Spiel zurück, um eine neue Runde zu starten.
-    spielerPunkte = 0;
-    dealerPunkte = 0;
-    starteSpiel();  // Startet ein neues Spiel.
-  }
-  
-  // Funktion zum Beenden des Spiels und zur Ermittlung des Gewinners
-  function beendeSpiel() {
-    rl.question('Möchtest du nochmal spielen? (ja/nein): ', (antwort) => {
-      if (antwort.toLowerCase() === 'ja') {
-        neustart();  // Startet ein neues Spiel, wenn der Spieler "ja" sagt.
-      } else {
-        console.log('Spiel beendet. Auf Wiedersehen!');
-        rl.close();  // Beendet das Spiel, wenn der Spieler "nein" sagt.
+  })
+}
+
+// ---------------------------------------- Spiel start -----------------------------------------------------------
+
+function starteSpiel () {
+  spielerHand.push(randomKarte())
+  spielerHand.push(randomKarte())
+  dealerHand.push(randomKarte())
+  dealerHand.push(randomKarte())
+
+  spielerPunkte = berechnePunkte(spielerHand)
+  dealerPunkte = berechnePunkte(dealerHand)
+
+  /* console.log('Willkommen beim Blackjack-Spiel!\n') */
+
+  console.log('Willkommen beim Blackjack-Spiel!\n');
+  console.log(`Du hast ${spielerCoins} Coins.`);
+  console.log(`Aktueller Einsatz: ${aktuellerEinsatz} Coins.\n`);
+
+
+  // Zeige die Anfangshand
+
+  console.log('Deine Hand:')
+  spielerHand.forEach(karte => console.log(karte.bild)) // Zeigt die Karten in der Spielerhand.
+  console.log(`Deine Punkte: ${spielerPunkte}\n`) // Zeigt die Gesamtpunktzahl des Spielers.
+
+  // ******************************************************************** end
+
+  // ------------------------------------------- Spielerzug --------------------------------------------------------
+/*   function spielerZug () {
+    rl.question(
+      'Möchtest du "hit" (eine Karte ziehen) oder "stand" (behalten)? ',
+      antwort => {
+        if (antwort.toLowerCase() === 'hit') {
+          const karte = randomKarte()
+          spielerHand.push(karte) // Der Spieler zieht eine Karte.
+          spielerPunkte = berechnePunkte(spielerHand)
+          zeigeSpielerHand()
+
+          if (spielerPunkte > 21) {
+            console.log('Du hast verloren! Du hast mehr als 21 Punkte.')
+            beendeSpiel()
+          } else {
+            spielerZug()
+          }
+        } else if (antwort.toLowerCase() === 'stand') {
+          dealerZug() // Der Dealer ist an der Reihe.
+          if (dealerPunkte > 21 || dealerPunkte < spielerPunkte) {
+            console.log('Glückwunsch! Du hast gewonnen.')
+
+            if (spielerPunkte === 21) {
+              console.log("Blackjack.");
+            }
+                       
+          } else if (dealerPunkte === spielerPunkte) {
+            console.log('Unentschieden! Niemand gewinnt.')
+          } else {
+            console.log('Dealer gewinnt! Du hast verloren.')
+          }
+          beendeSpiel()
+        } else {
+          console.log('Ungültige Eingabe. Bitte gib "hit" oder "stand" ein.')
+          spielerZug()
+        }
       }
-    });
+    )
   }
+ */
+
+  function spielerZug() {
+    rl.question(
+      `Möchtest du "hit" (eine Karte ziehen) oder "stand" (behalten)? Aktueller Einsatz: ${aktuellerEinsatz} Coins. `,
+      antwort => {
+        if (antwort.toLowerCase() === 'hit') {
+          const karte = randomKarte();
+          spielerHand.push(karte);
+          spielerPunkte = berechnePunkte(spielerHand);
+          zeigeSpielerHand();
   
-  // Funktion zum Starten des Spiels
-  function starteSpiel() {
-    // Ausgabe der Begrüßungsnachricht
-    console.log('Willkommen beim Blackjack-Spiel!\n');
-  
-    // Austeilen der Anfangshand
-    spielerHand.push(randomKarte());
-    spielerHand.push(randomKarte());
-    dealerHand.push(randomKarte());
-    dealerHand.push(randomKarte());
-  
-    // Berechnen der Punkte für Spieler und Dealer
-    spielerPunkte = berechnePunkte(spielerHand);
-    dealerPunkte = berechnePunkte(dealerHand);
-  
-    // Anzeigen der Anfangshand des Spielers
-    console.log('Deine Hand:');
-    spielerHand.forEach(karte => console.log(karte.bild));  // Zeigt die Karten in der Spielerhand.
-    console.log(`Deine Punkte: ${spielerPunkte}\n`);  // Zeigt die Gesamtpunktzahl des Spielers.
-  
-    // Spielerzug starten
-    spielerZug();
-  }
-  
-  // Funktion für den Spielerzug
-// Funktion für den Spielerzug
-function spielerZug() {
-    rl.question('Möchtest du "hit" (eine Karte ziehen) oder "stand" (behalten)? ', (antwort) => {
-      if (antwort.toLowerCase() === 'hit') {
-        const karte = randomKarte();
-        spielerHand.push(karte);  // Der Spieler zieht eine Karte.
-        spielerPunkte = berechnePunkte(spielerHand);
-        zeigeSpielerHand();
-  
-        // Überprüfen, ob der Spieler verloren hat (über 21 Punkte)
-        if (spielerPunkte > 21) {
-          console.log('Du hast verloren! Du hast mehr als 21 Punkte.');
-          beendeSpiel();
-        } else if (spielerPunkte === 21) { // Überprüfen, ob der Spieler BlackJack hat
-          console.log('BlackJack! Du hast genau 21 Punkte. Du hast gewonnen!');
+          if (spielerPunkte > 21) {
+            console.log('Du hast verloren! Du hast mehr als 21 Punkte.');
+            spielerCoins -= aktuellerEinsatz;
+            beendeSpiel();
+          } else {
+            spielerZug();
+          }
+        } else if (antwort.toLowerCase() === 'stand') {
+          dealerZug();
+          if (dealerPunkte > 21 || dealerPunkte < spielerPunkte || spielerPunkte === 21) {
+            console.log('Glückwunsch! Du hast gewonnen.');
+            if (spielerPunkte === 21) {
+              console.log('Blackjack.');
+              spielerCoins += aktuellerEinsatz * 2; // Der Spieler gewinnt das Doppelte des Einsatzes zurück.
+            } else {
+              spielerCoins += aktuellerEinsatz;
+            }
+          } else if (dealerPunkte === spielerPunkte) {
+            console.log('Unentschieden! Niemand gewinnt.');
+          } else {
+            console.log('Dealer gewinnt! Du hast verloren.');
+            spielerCoins -= aktuellerEinsatz;
+          }
+          console.log(`Du hast jetzt ${spielerCoins} Coins.\n`);
           beendeSpiel();
         } else {
-          spielerZug();  // Fortsetzen des Spielerzugs
+          console.log('Ungültige Eingabe. Bitte gib "hit" oder "stand" ein.');
+          spielerZug();
         }
-      } else if (antwort.toLowerCase() === 'stand') {
-        dealerZug();  // Der Dealer ist an der Reihe.
-  
-        // Überprüfen, wer gewonnen hat
-        if (dealerPunkte > 21 || dealerPunkte < spielerPunkte) {
-          console.log('Glückwunsch! Du hast gewonnen.');
-        } else if (dealerPunkte === spielerPunkte) {
-          console.log('Unentschieden! Niemand gewinnt.');
-        } else {
-          console.log('Dealer gewinnt! Du hast verloren.');
-        }
-        beendeSpiel();
-      } else {
-        console.log('Ungültige Eingabe. Bitte gib "hit" oder "stand" ein.');
-        spielerZug();
       }
-    });
+    );
   }
   
-  // Starten des Spiels
-  starteSpiel();  // Startet das Spiel.
-  
+
+
+ 
+  // ******************************************************************** end
+
+  spielerZug() // Startet den Spielerzug.
+}
+
+starteSpiel() // Startet das Spiel.
