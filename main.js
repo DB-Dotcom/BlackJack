@@ -664,6 +664,13 @@ const franzoesischesBlatt = [
   let deck = [...franzoesischesBlatt];  // Das Deck enthält alle Karten, zu Beginn eine Kopie des französischen Blatts.
   let spielerPunkte = 0;  // Die Gesamtpunktzahl des Spielers.
   let dealerPunkte = 0;   // Die Gesamtpunktzahl des Dealers.
+  let spielerDeposit = 0; // Das Startguthaben des Spielers.
+  let spielerEinsatz = 0; // Der Einsatz des Spielers.
+  let spielerGewinn = 0;  // Der Gewinn des Spielers.
+  let spielerVerlust = 0; // Der Verlust des Spielers.
+  let spielerKonto = 0;   // Das aktuelle Guthaben des Spielers.
+
+
   
   // Die obigen Variablen initialisieren das Spiel und speichern den Spielstand.
   
