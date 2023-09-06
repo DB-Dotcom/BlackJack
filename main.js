@@ -659,9 +659,9 @@ const franzoesischesBlatt = [
   });
   
   // Deklaration der Spielvariablen
-  let spielerHand = [];   // Hier werden die Karten des Spielers gespeichert.
-  let dealerHand = [];    // Hier werden die Karten des Dealers gespeichert.
-  let deck = [...franzoesischesBlatt];  // Das Deck enthält alle Karten, zu Beginn eine Kopie des französischen Blatts.
+  const spielerHand = [];   // Hier werden die Karten des Spielers gespeichert.
+  const dealerHand = [];    // Hier werden die Karten des Dealers gespeichert.
+  const deck = [...franzoesischesBlatt];  // Das Deck enthält alle Karten, zu Beginn eine Kopie des französischen Blatts.
   let spielerPunkte = 0;  // Die Gesamtpunktzahl des Spielers.
   let dealerPunkte = 0;   // Die Gesamtpunktzahl des Dealers.
   let spielerDeposit = 0; // Das Startguthaben des Spielers.
