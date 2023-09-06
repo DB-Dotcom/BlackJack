@@ -42,9 +42,9 @@ const franzoesischesBlatt = [
       farbe: "Herz",
       bild: `
        .-----------------.
-       | 5           5   |
+       | 5             5 |
        |    ♥     5   ♥  |
-       |   5           5 |
+       | 5             5 |
        '-----------------'`,
       id: 3,
     },
@@ -54,9 +54,9 @@ const franzoesischesBlatt = [
       farbe: "Herz",
       bild: `
        .-----------------.
-       | 6           6   |
+       | 6            6 |
        |    ♥  6   ♥    |
-       |   6           6 |
+       | 6            6 |
        '-----------------'`,
       id: 4,
     },
@@ -66,9 +66,9 @@ const franzoesischesBlatt = [
       farbe: "Herz",
       bild: `
        .-----------------.
-       | 7           7   |
-       |    ♥  7   ♥    |
-       |   7           7 |
+       | 7             7 |
+       |    ♥   7   ♥    |
+       | 7             7 |
        '-----------------'`,
       id: 5,
     },
@@ -78,9 +78,9 @@ const franzoesischesBlatt = [
       farbe: "Herz",
       bild: `
        .-----------------.
-       | 8           8   |
-       |    ♥  8   ♥    |
-       |   8           8 |
+       | 8             8 |
+       |     ♥  8   ♥    |
+       | 8             8 |
        '-----------------'`,
       id: 6,
     },
@@ -90,9 +90,9 @@ const franzoesischesBlatt = [
       farbe: "Herz",
       bild: `
        .-----------------.
-       | 9           9   |
-       |    ♥  9   ♥    |
-       |   9           9 |
+       | 9             9 |
+       |     ♥  9   ♥    |
+       | 9             9 |
        '-----------------'`,
       id: 7,
     },
@@ -102,9 +102,9 @@ const franzoesischesBlatt = [
       farbe: "Herz",
       bild: `
        .-----------------.
-       | 10          10  |
+       | 10           10 |
        |    ♥   10  ♥    |
-       |   10          10 |
+       | 10           10 |
        '-----------------'`,
       id: 8,
     },
@@ -116,7 +116,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Bube        Bube|
        |    ♥         ♥  |
-       |  Bube       Bube|
+       | Bube        Bube|
        '-----------------'`,
       id: 9,
     },
@@ -128,7 +128,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Dame        Dame|
        |    ♥         ♥  |
-       |  Dame       Dame|
+       | Dame        Dame|
        '-----------------'`,
       id: 10,
     },
@@ -140,7 +140,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | König      König|
        |    ♥         ♥  |
-       |  König     König|
+       | König      König|
        '-----------------'`,
       id: 11,
     },
@@ -150,9 +150,9 @@ const franzoesischesBlatt = [
       farbe: "Herz",
       bild: `
        .-----------------.
-       | Ass           Ass|
+       | Ass          Ass|
        |    ♥         ♥  |
-       |  Ass           Ass|
+       | Ass          Ass|
        '-----------------'`,
       id: 12,
     },
@@ -212,9 +212,9 @@ const franzoesischesBlatt = [
       farbe: "Karo",
       bild: `
        .-----------------.
-       | 6           6   |
-       |    ♦  6   ♦    |
-       |   6           6 |
+       | 6             6 |
+       |     ♦  6   ♦    |
+       | 6             6 |
        '-----------------'`,
       id: 17,
     },
@@ -224,9 +224,9 @@ const franzoesischesBlatt = [
       farbe: "Karo",
       bild: `
        .-----------------.
-       | 7           7   |
-       |    ♦  7   ♦    |
-       |   7           7 |
+       | 7             7 |
+       |     ♦  7   ♦    |
+       | 7             7 |
        '-----------------'`,
       id: 18,
     },
@@ -236,9 +236,9 @@ const franzoesischesBlatt = [
       farbe: "Karo",
       bild: `
        .-----------------.
-       | 8           8   |
-       |    ♦  8   ♦    |
-       |   8           8 |
+       | 8             8 |
+       |     ♦  8   ♦    |
+       | 8             8 |
        '-----------------'`,
       id: 19,
     },
@@ -248,9 +248,9 @@ const franzoesischesBlatt = [
       farbe: "Karo",
       bild: `
        .-----------------.
-       | 9           9   |
-       |    ♦  9   ♦    |
-       |   9           9 |
+       | 9             9 |
+       |     ♦  9   ♦    |
+       | 9             9 |
        '-----------------'`,
       id: 20,
     },
@@ -260,9 +260,9 @@ const franzoesischesBlatt = [
       farbe: "Karo",
       bild: `
        .-----------------.
-       | 10          10  |
+       | 10           10 |
        |    ♦   10  ♦    |
-       |   10          10 |
+       | 10           10 |
        '-----------------'`,
       id: 21,
     },
@@ -274,7 +274,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Bube        Bube|
        |    ♦         ♦  |
-       |  Bube       Bube|
+       | Bube        Bube|
        '-----------------'`,
       id: 22,
     },
@@ -286,7 +286,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Dame        Dame|
        |    ♦         ♦  |
-       |  Dame       Dame|
+       | Dame        Dame|
        '-----------------'`,
       id: 23,
     },
@@ -298,7 +298,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | König      König|
        |    ♦         ♦  |
-       |  König     König|
+       | König      König|
        '-----------------'`,
       id: 24,
     },
@@ -308,9 +308,9 @@ const franzoesischesBlatt = [
       farbe: "Karo",
       bild: `
        .-----------------.
-       | Ass           Ass|
+       | Ass          Ass|
        |    ♦         ♦  |
-       |  Ass           Ass|
+       | Ass          Ass|
        '-----------------'`,
       id: 25,
     },
@@ -346,9 +346,9 @@ const franzoesischesBlatt = [
       farbe: "Pik",
       bild: `
        .-----------------.
-       | 4           4   |
+       | 4             4 |
        |    ♠         ♠  |
-       |   4           4 |
+       | 4             4 |
        '-----------------'`,
       id: 28,
     },
@@ -358,9 +358,9 @@ const franzoesischesBlatt = [
       farbe: "Pik",
       bild: `
        .-----------------.
-       | 5           5   |
-       |    ♠     5   ♠  |
-       |   5           5 |
+       | 5             5 |
+       |    ♠   5   ♠    |
+       | 5             5 |
        '-----------------'`,
       id: 29,
     },
@@ -370,9 +370,9 @@ const franzoesischesBlatt = [
       farbe: "Pik",
       bild: `
        .-----------------.
-       | 6           6   |
-       |    ♠  6   ♠    |
-       |   6           6 |
+       | 6             6 |
+       |     ♠  6   ♠    |
+       | 6             6 |
        '-----------------'`,
       id: 30,
     },
@@ -382,9 +382,9 @@ const franzoesischesBlatt = [
       farbe: "Pik",
       bild: `
        .-----------------.
-       | 7           7   |
-       |    ♠  7   ♠    |
-       |   7           7 |
+       | 7             7 |
+       |    ♠   7   ♠    |
+       | 7             7 |
        '-----------------'`,
       id: 31,
     },
@@ -394,9 +394,9 @@ const franzoesischesBlatt = [
       farbe: "Pik",
       bild: `
        .-----------------.
-       | 8           8   |
-       |    ♠  8   ♠    |
-       |   8           8 |
+       | 8             8 |
+       |     ♠  8   ♠    |
+       | 8             8 |
        '-----------------'`,
       id: 32,
     },
@@ -406,9 +406,9 @@ const franzoesischesBlatt = [
       farbe: "Pik",
       bild: `
        .-----------------.
-       | 9           9   |
-       |    ♠  9   ♠    |
-       |   9           9 |
+       | 9             9 |
+       |     ♠  9   ♠    |
+       | 9             9 |
        '-----------------'`,
       id: 33,
     },
@@ -420,7 +420,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | 10          10  |
        |    ♠   10  ♠    |
-       |   10          10 |
+       | 10           10 |
        '-----------------'`,
       id: 34,
     },
@@ -432,7 +432,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Bube        Bube|
        |    ♠         ♠  |
-       |  Bube       Bube|
+       | Bube        Bube|
        '-----------------'`,
       id: 35,
     },
@@ -444,7 +444,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Dame        Dame|
        |    ♠         ♠  |
-       |  Dame       Dame|
+       | Dame        Dame|
        '-----------------'`,
       id: 36,
     },
@@ -456,7 +456,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | König      König|
        |    ♠         ♠  |
-       |  König     König|
+       | König      König|
        '-----------------'`,
       id: 37,
     },
@@ -466,9 +466,9 @@ const franzoesischesBlatt = [
       farbe: "Pik",
       bild: `
        .-----------------.
-       | Ass           Ass|
+       | Ass          Ass|
        |    ♠         ♠  |
-       |  Ass           Ass|
+       | Ass          Ass|
        '-----------------'`,
       id: 38,
     },
@@ -504,9 +504,9 @@ const franzoesischesBlatt = [
       farbe: "Kreuz",
       bild: `
        .-----------------.
-       | 4           4   |
+       | 4             4 |
        |    ♣         ♣  |
-       |   4           4 |
+       | 4             4 |
        '-----------------'`,
       id: 41,
     },
@@ -516,9 +516,9 @@ const franzoesischesBlatt = [
       farbe: "Kreuz",
       bild: `
        .-----------------.
-       | 5           5   |
-       |    ♣     5   ♣  |
-       |   5           5 |
+       | 5             5 |
+       |    ♣    5   ♣   |
+       | 5             5 |
        '-----------------'`,
       id: 42,
     },
@@ -528,9 +528,9 @@ const franzoesischesBlatt = [
       farbe: "Kreuz",
       bild: `
        .-----------------.
-       | 6           6   |
-       |    ♣  6   ♣    |
-       |   6           6 |
+       | 6             6 |
+       |     ♣  6   ♣    |
+       | 6             6 |
        '-----------------'`,
       id: 43,
     },
@@ -540,9 +540,9 @@ const franzoesischesBlatt = [
       farbe: "Kreuz",
       bild: `
        .-----------------.
-       | 7           7   |
-       |    ♣  7   ♣    |
-       |   7           7 |
+       | 7             7 |
+       |    ♣   7   ♣    |
+       | 7             7 |
        '-----------------'`,
       id: 44,
     },
@@ -552,9 +552,9 @@ const franzoesischesBlatt = [
       farbe: "Kreuz",
       bild: `
        .-----------------.
-       | 8           8   |
-       |    ♣  8   ♣    |
-       |   8           8 |
+       | 8             8 |
+       |    ♣   8   ♣    |
+       | 8             8 |
        '-----------------'`,
       id: 45,
     },
@@ -564,9 +564,9 @@ const franzoesischesBlatt = [
       farbe: "Kreuz",
       bild: `
        .-----------------.
-       | 9           9   |
-       |    ♣  9   ♣    |
-       |   9           9 |
+       | 9             9 |
+       |     ♣  9   ♣    |
+       | 9             9 |
        '-----------------'`,
       id: 46,
     },
@@ -578,7 +578,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | 10          10  |
        |    ♣   10  ♣    |
-       |   10          10 |
+       | 10           10 |
        '-----------------'`,
       id: 47,
     },
@@ -590,7 +590,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Bube        Bube|
        |    ♣         ♣  |
-       |  Bube       Bube|
+       | Bube        Bube|
        '-----------------'`,
       id: 48,
     },
@@ -602,7 +602,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | Dame        Dame|
        |    ♣         ♣  |
-       |  Dame       Dame|
+       | Dame        Dame|
        '-----------------'`,
       id: 49,
     },
@@ -614,7 +614,7 @@ const franzoesischesBlatt = [
        .-----------------.
        | König      König|
        |    ♣         ♣  |
-       |  König     König|
+       | König      König|
        '-----------------'`,
       id: 50,
     },
@@ -624,14 +624,29 @@ const franzoesischesBlatt = [
       farbe: "Kreuz",
       bild: `
        .-----------------.
-       | Ass           Ass|
+       | Ass          Ass|
        |    ♣         ♣  |
-       |  Ass           Ass|
+       | Ass          Ass|
        '-----------------'`,
       id: 51,
     },
   ];
   
+
+  const faceDownBlatt = [
+    // Herz
+    {
+      name: "FaceDown",
+      bild: `
+       .-----------------.
+       | ############### |
+       | ############### |
+       | ############### |
+       '-----------------'`,
+      id: 0,
+    },
+]
+
   // ----------------------------------------- game code ------------------------------------------------------------------
   
   
