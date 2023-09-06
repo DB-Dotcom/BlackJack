@@ -658,12 +658,7 @@ const rl = readline.createInterface({
 
 // ---------------------------------------- variable  -----------------------------------------------------------
 
-/* let spielerHand = [] // Hier werden die Karten des Spielers gespeichert.
-let dealerHand = [] // Hier werden die Karten des Dealers gespeichert.
-let deck = [...franzoesischesBlatt] // Das Deck enthält alle Karten, zu Beginn eine Kopie des französischen Blatts.
-let spielerPunkte = 0 // Die Gesamtpunktzahl des Spielers.
-let dealerPunkte = 0 // Die Gesamtpunktzahl des Dealers.
- */
+
 let spielerHand = [];
 let dealerHand = [];
 let deck = [...franzoesischesBlatt];
@@ -707,15 +702,7 @@ function dealerZug () {
 
 // ******************************************************************** end
 
-/* function neustart () {
-  spielerHand = []
-  dealerHand = []
-  deck = [...franzoesischesBlatt] // Setzt das Spiel zurück, um eine neue Runde zu starten.
-  spielerPunkte = 0
-  dealerPunkte = 0
-  starteSpiel() // Startet ein neues Spiel.
-}
- */
+
 function neustart() {
   spielerHand = [];
   dealerHand = [];
@@ -763,48 +750,7 @@ function starteSpiel () {
   spielerHand.forEach(karte => console.log(karte.bild)) // Zeigt die Karten in der Spielerhand.
   console.log(`Deine Punkte: ${spielerPunkte}\n`) // Zeigt die Gesamtpunktzahl des Spielers.
 
-  // ******************************************************************** end
-
-  // ------------------------------------------- Spielerzug --------------------------------------------------------
-/*   function spielerZug () {
-    rl.question(
-      'Möchtest du "hit" (eine Karte ziehen) oder "stand" (behalten)? ',
-      antwort => {
-        if (antwort.toLowerCase() === 'hit') {
-          const karte = randomKarte()
-          spielerHand.push(karte) // Der Spieler zieht eine Karte.
-          spielerPunkte = berechnePunkte(spielerHand)
-          zeigeSpielerHand()
-
-          if (spielerPunkte > 21) {
-            console.log('Du hast verloren! Du hast mehr als 21 Punkte.')
-            beendeSpiel()
-          } else {
-            spielerZug()
-          }
-        } else if (antwort.toLowerCase() === 'stand') {
-          dealerZug() // Der Dealer ist an der Reihe.
-          if (dealerPunkte > 21 || dealerPunkte < spielerPunkte) {
-            console.log('Glückwunsch! Du hast gewonnen.')
-
-            if (spielerPunkte === 21) {
-              console.log("Blackjack.");
-            }
-                       
-          } else if (dealerPunkte === spielerPunkte) {
-            console.log('Unentschieden! Niemand gewinnt.')
-          } else {
-            console.log('Dealer gewinnt! Du hast verloren.')
-          }
-          beendeSpiel()
-        } else {
-          console.log('Ungültige Eingabe. Bitte gib "hit" oder "stand" ein.')
-          spielerZug()
-        }
-      }
-    )
-  }
- */
+  
 
   function spielerZug() {
     rl.question(
