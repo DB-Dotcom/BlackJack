@@ -755,7 +755,8 @@ const franzoesischesBlatt = [
   }
   
   // Funktion für den Spielerzug
-  function spielerZug() {
+// Funktion für den Spielerzug
+function spielerZug() {
     rl.question('Möchtest du "hit" (eine Karte ziehen) oder "stand" (behalten)? ', (antwort) => {
       if (antwort.toLowerCase() === 'hit') {
         const karte = randomKarte();
@@ -766,6 +767,9 @@ const franzoesischesBlatt = [
         // Überprüfen, ob der Spieler verloren hat (über 21 Punkte)
         if (spielerPunkte > 21) {
           console.log('Du hast verloren! Du hast mehr als 21 Punkte.');
+          beendeSpiel();
+        } else if (spielerPunkte === 21) { // Überprüfen, ob der Spieler BlackJack hat
+          console.log('BlackJack! Du hast genau 21 Punkte. Du hast gewonnen!');
           beendeSpiel();
         } else {
           spielerZug();  // Fortsetzen des Spielerzugs
