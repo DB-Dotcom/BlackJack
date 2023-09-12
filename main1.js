@@ -632,319 +632,239 @@ const franzoesischesBlatt = [
     }
   ]
   
-  // ----------------------------------------- game code ------------------------------------------------------------------
-  
-  // Erstellt eine Schnittstelle für die Ein- und Ausgabe.
-  
-  // Imports
-  import inquirer from 'inquirer'
-  
-  // Deklaration der Spielvariablen
-  let spielerHand = []
-  let dealerHand = []
-  let deck = [...franzoesischesBlatt] // Das Deck mit den Spielkarten.
-  let spielerPunkte = 0
-  let dealerPunkte = 0
-  let spielerCoins = 500 // Starteinlage des Spielers.
-  let aktuellerEinsatz = 0 // Der Standard-Einsatz zu Beginn.
-  
-  // Funktion zum Ziehen einer zufälligen Karte aus dem Deck.
-  function randomKarte () {
-    const randomIndex = Math.floor(Math.random() * deck.length)
-    return deck.splice(randomIndex, 1)[0] // Zieht eine zufällige Karte aus dem Deck und entfernt sie daraus.
-  }
-  
-  // Funktion zum Berechnen der Punktzahl einer Hand.
-  function berechnePunkte (hand) {
-    return hand.reduce((sum, karte) => sum + karte.wert, 0) // Berechnet die Gesamtpunktzahl einer Hand.
-  }
-  
-  // Funktion für den Dealerzug.
-  function dealerZug () {
-    while (dealerPunkte < 17) {
-      const karte = randomKarte()
-      dealerHand.push(karte) // Der Dealer zieht Karten, bis er mindestens 17 Punkte hat.
-      dealerPunkte = berechnePunkte(dealerHand)
-    }
-    zeigeDealerHand(dealerHand)
-  }
-  
-    // !Funktion zum Anzeigen der Spielerhand (Karten nebeneinander)
-function zeigeSpielerHand(arr) {
-  const zusammenGesetzt = ["", "", "", "", "", "", ""];
-  for (let i = 0; i < arr.length; i++) {
-    const card = arr[i].bild;
-    const cardArray = card.split("\n");
 
-    for (let j = 0; j < cardArray.length; j++) {
-      zusammenGesetzt[j] += cardArray[j];
-    }
-  }
-  console.log(zusammenGesetzt.join("\n"));
+
+import inquirer from 'inquirer';
+
+// Definition der Spielvariablen
+let spielerHand = [];
+let dealerHand = [];
+let deck = [...franzoesischesBlatt]; // Das Deck mit den Spielkarten.
+let spielerPunkte = 0;
+let dealerPunkte = 0;
+let spielerCoins = 500; // Starteinlage des Spielers.
+let aktuellerEinsatz = 0; // Der Standard-Einsatz zu Beginn.
+
+// Funktion zum Ziehen einer zufälligen Karte aus dem Deck.
+function randomKarte() {
+  const randomIndex = Math.floor(Math.random() * deck.length);
+  return deck.splice(randomIndex, 1)[0]; // Zieht eine zufällige Karte aus dem Deck und entfernt sie daraus.
 }
 
-// ! !!Funktion zum Anzeigen der Dealerhand (Karten nebeneinander)
-function zeigeDealerHand(arr) {
-  const zusammenGesetzt = ["", "", "", "", "", "", ""];
+// Funktion zum Berechnen der Punktzahl einer Hand.
+function berechnePunkte(hand) {
+  return hand.reduce((sum, karte) => sum + karte.wert, 0); // Berechnet die Gesamtpunktzahl einer Hand.
+}
 
-  // Zeige die erste Karte des Dealers
-  const ersteKarte = arr[0].bild;
-  const ersteKartenArray = ersteKarte.split("\n");
-
-  for (let j = 0; j < ersteKartenArray.length; j++) {
-    zusammenGesetzt[j] += ersteKartenArray[j];
-  }
-
-    // Zeige die zweite Karte als Fragezeichen
-    const fragezeichenblatt = `
-    .-----------------.
-    | ?           ?   |
-    |       ???       |
-    |   ?           ? |
-    '-----------------'`
-    const fragezeichenArray = fragezeichenblatt.split('\n')
-  
-    for (let j = 0; j < fragezeichenArray.length; j++) {
-      zusammenGesetzt[j] += fragezeichenArray[j]
+// Funktion für den Dealerzug.
+function dealerZug(callback) {
+  function zieheKarten() {
+    while (dealerPunkte < 17) {
+      const karte = randomKarte();
+      dealerHand.push(karte); // Der Dealer zieht Karten, bis er mindestens 17 Punkte hat.
+      dealerPunkte = berechnePunkte(dealerHand);
     }
-  
-    console.log(zusammenGesetzt.join('\n'))
+    callback();
   }
-  
 
-  // Funktion für einen Neustart des Spiels.
-  function neustart () {
-    inquirer
-      .prompt([
-       /*  {
-          type: 'input',
-          name: 'spielerCoins',
-          message: 'Gib deinen gewünschten Anfangsstand an (positive Zahl):',
-          validate: function (value) {
-            const parsedValue = parseInt(value)
-            if (isNaN(parsedValue) || parsedValue <= 0) {
-              return 'Bitte gib eine positive Zahl ein.'
-            }
-            return true
+  zieheKarten();
+}
+
+// Funktion zum Anzeigen der Spielerhand (Karten nebeneinander)
+function zeigeSpielerHand(arr) {
+  // Code hier...
+}
+
+// Funktion zum Anzeigen der Dealerhand (Karten nebeneinander)
+function zeigeDealerHand(arr) {
+  // Code hier...
+}
+
+// Funktion für einen Neustart des Spiels.
+function neustart() {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'neuerEinsatz',
+        message: 'Wähle deinen neuen Einsatz oder beende das Spiel:',
+        choices: ['10', '20', '30', 'Spiel beenden']
+      }
+    ])
+    .then(answers => {
+      if (answers.neuerEinsatz === 'Spiel beenden') {
+        console.log('Spiel beendet. Auf Wiedersehen!');
+        return;
+      } else {
+        aktuellerEinsatz = parseInt(answers.neuerEinsatz);
+        spielerHand = [];
+        dealerHand = [];
+        deck = [...franzoesischesBlatt];
+        spielerPunkte = 0;
+        dealerPunkte = 0;
+        starteSpiel();
+      }
+    });
+}
+
+// Funktion zum Beenden des Spiels und Fragen nach einem Neustart.
+function beendeSpiel() {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'weiterSpielen',
+        message: 'Möchtest du nochmal spielen?',
+        choices: ['ja', 'nein']
+      }
+    ])
+    .then(answers => {
+      if (answers.weiterSpielen === 'ja') {
+        neustart(); // Startet ein neues Spiel, wenn der Spieler "ja" sagt.
+        console.clear();
+      } else {
+        console.log('Spiel beendet. Auf Wiedersehen!');
+      }
+    });
+}
+
+// Funktion zum Anzeigen des Startbildschirms.
+function showStartScreen() {
+  const startScreen = `
+    // Hier kommt der ASCII-Text für den Startbildschirm
+  `;
+  console.clear();
+  console.log(startScreen);
+}
+
+// Hauptspiellogik
+function starteSpiel() {
+  // Verteilt die Anfangshand.
+  spielerHand.push(randomKarte());
+  spielerHand.push(randomKarte());
+  dealerHand.push(randomKarte());
+  dealerHand.push(randomKarte());
+
+  spielerPunkte = berechnePunkte(spielerHand);
+  dealerPunkte = berechnePunkte(dealerHand);
+
+  console.log('Willkommen beim Blackjack-Spiel!\n');
+  console.log(`Du hast ${spielerCoins} Coins.`);
+  console.log(`Aktueller Einsatz: ${aktuellerEinsatz} Coins.\n`);
+
+  // Zeigt die Anfangshand des Dealers.
+  console.log('Dealer Hand:');
+  zeigeDealerHand(dealerHand);
+  console.log(`Dealer Punkte: ${dealerPunkte}\n`);
+
+  // Zeigt die Anfangshand des Spielers.
+  console.log('Deine Hand:');
+  zeigeSpielerHand(spielerHand);
+  console.log(`Deine Punkte: ${spielerPunkte}\n`);
+
+  spielerZug(); // Startet den Spielerzug.
+}
+
+// Funktion für den Spielerzug
+function spielerZug() {
+  inquirer
+    .prompt([
+      {
+        type: 'list',
+        name: 'zugOption',
+        message: `Möchtest du "hit" (eine Karte ziehen), "stand" (behalten) oder "double" (Einsatz verdoppeln)? Aktueller Einsatz: ${aktuellerEinsatz} Coins.`,
+        choices: ['hit', 'stand', 'double']
+      }
+    ])
+    .then(answers => {
+      switch (answers.zugOption) {
+        case 'hit':
+          spielerHand.push(randomKarte());
+          spielerPunkte = berechnePunkte(spielerHand);
+          zeigeSpielerHand(spielerHand);
+
+          if (spielerPunkte > 21) {
+            console.log('Du hast verloren! Du hast mehr als 21 Punkte.');
+            spielerCoins -= aktuellerEinsatz;
+            beendeSpiel();
+          } else {
+            spielerZug();
           }
-        }, */
-        {
-          type: 'list',
-          name: 'neuerEinsatz',
-          message: 'Wähle deinen neuen Einsatz oder beende das Spiel:',
-          choices: ['10', '20', '30', 'Spiel beenden']
-        }
-      ])
-      .then(answers => {
-        if (answers.neuerEinsatz === 'Spiel beenden') {
-          console.log('Spiel beendet. Auf Wiedersehen!')
-          return rl.close() // Beendet das Spiel, wenn der Spieler "Spiel beenden" wählt.
-        } else {
-         /*  spielerCoins = parseInt(answers.spielerCoins) */
-          aktuellerEinsatz = parseInt(answers.neuerEinsatz)
-          spielerHand = []
-          dealerHand = []
-          deck = [...franzoesischesBlatt]
-          spielerPunkte = 0
-          dealerPunkte = 0
-          starteSpiel()
-        }
-      })
-  }
-  
-  // Funktion zum Beenden des Spiels und Fragen nach einem Neustart.
-  function beendeSpiel () {
-    inquirer
-      .prompt([
-        {
-          type: 'list',
-          name: 'weiterSpielen',
-          message: 'Möchtest du nochmal spielen?',
-          choices: ['ja', 'nein']
-        }
-      ])
-      .then(answers => {
-        if (answers.weiterSpielen === 'ja') {
-          neustart() // Startet ein neues Spiel, wenn der Spieler "ja" sagt.
-          console.clear();
-        } else {
-          console.log('Spiel beendet. Auf Wiedersehen!')
-          
-        }
-      })
-  }
+          break;
 
-  // Funktion zum Anzeigen des Startbildschirms.
-  function showStartScreen() {
-    const startScreen = `
-    888     888                888       d8b                888      
-    888     888                888       Y8P                888      
-    888     888                888                          888      
-    88888b. 888 8888b.  .d8888b888  888 8888 8888b.  .d8888b888  888 
-    888 "88b888    "88bd88P"   888 .88P "888    "88bd88P"   888 .88P 
-    888  888888.d888888888     888888K   888.d888888888     888888K  
-    888 d88P888888  888Y88b.   888 "88b  888888  888Y88b.   888 "88b 
-    88888P" 888"Y888888 "Y8888P888  888  888"Y888888 "Y8888P888  888 
-                                         888                         
-                                        d88P                         
-                                      888P"       
-    `;
-    console.clear();
-    console.log(startScreen);
-  }
-
-  
-
-
-/*   function getInitialCoins() {
-    inquirer
-      .prompt([
-        {
-          type: 'input',
-          name: 'spielerCoins',
-          message: 'Gib deinen gewünschten Anfangsstand an (positive Zahl):',
-          validate: function (value) {
-            const parsedValue = parseInt(value);
-            if (isNaN(parsedValue) || parsedValue <= 0) {
-              return 'Bitte gib eine positive Zahl ein.';
-            }
-            return true;
-          },
-        },
-      ])
-      .then(answers => {
-        const spielerCoins = parseInt(answers.spielerCoins);
-        console.log(`Du hast ${spielerCoins} Anfangscoins.`);
-        // Hier kannst du mit dem Spiel fortfahren.
-      });
-  }
-  */
-
-  // #################################################################  Spielstart
-
-  // Funktion zum Starten des Spiels.
-
-  showStartScreen() // wilkommen bildschirm
-/*   getInitialCoins() */ // fragt nach anfangscoins
-console.log(`Du hast ${spielerCoins} Anfangscoins.`);
-
-
- 
-  function starteSpiel () {
-    // Verteilt die Anfangshand.
-    spielerHand.push(randomKarte()) // Zieht eine zufällige Karte aus dem Deck und fügt sie der Spielerhand hinzu.
-    spielerHand.push(randomKarte()) // Zieht eine zufällige Karte aus dem Deck und fügt sie der Spielerhand hinzu.
-    dealerHand.push(randomKarte()) // Zieht eine zufällige Karte aus dem Deck und fügt sie der Dealerhand hinzu.
-    dealerHand.push(randomKarte()) // Zieht eine zufällige Karte aus dem Deck und fügt sie der Dealerhand hinzu.
-  
-    spielerPunkte = berechnePunkte(spielerHand)
-    dealerPunkte = berechnePunkte(dealerHand)
-   
-    console.log('Willkommen beim Blackjack-Spiel!\n')
-    console.log(`Du hast ${spielerCoins} Coins.`)  // Zeigt die Anzahl der Coins des Spielers.
-    console.log(`Aktueller Einsatz: ${aktuellerEinsatz} Coins.\n`) // Zeigt den aktuellen Einsatz.
-  
-    // Zeigt die Anfangshand des Dealers.
-    console.log('Dealer Hand:')
-    zeigeDealerHand(dealerHand)
-    console.log(`Dealer Punkte: ${dealerPunkte}\n`)
-  
-    // Zeigt die Anfangshand des Spielers.
-    console.log('Deine Hand:')
-    zeigeSpielerHand(spielerHand)
-    console.log(`Deine Punkte: ${spielerPunkte}\n`)
-  
-    spielerZug() // Startet den Spielerzug.
-  
-  
-  // Funktion für den Spielerzug
-  function spielerZug () {
-    inquirer
-      .prompt([ // Fragt den Spieler, ob er eine Karte ziehen oder behalten möchte.
-        {
-          type: 'list',
-          name: 'zugOption',
-          message: `Möchtest du "hit" (eine Karte ziehen), "stand" (behalten) oder "double" (Einsatz verdoppeln)? Aktueller Einsatz: ${aktuellerEinsatz} Coins.`,
-          choices: ['hit', 'stand', 'double']
-        }
-      ])
-      .then(answers => { // Verarbeitet die Antwort des Spielers.
-        switch (answers.zugOption) {
-          case 'hit': // Der Spieler zieht eine Karte.
-            // Der Spieler zieht eine Karte.
-            spielerHand.push(randomKarte())
-            spielerPunkte = berechnePunkte(spielerHand)
-            zeigeSpielerHand(spielerHand)
-  
-            // Überprüft, ob der Spieler mehr als 21 Punkte hat.
-            if (spielerPunkte > 21) {
-              console.log('Du hast verloren! Du hast mehr als 21 Punkte.')
-              spielerCoins -= aktuellerEinsatz
-              beendeSpiel()
-            } else {
-              // Wenn der Spieler weniger als 21 Punkte hat, geht das Spiel weiter.
-              spielerZug()
-            }
-            break
-  
-          case 'stand': // Der Spieler behält seine Karten, und der Dealer ist an der Reihe.
-            // Der Spieler behält seine Karten, und der Dealer ist an der Reihe.
-            dealerZug()
+        case 'stand':
+          dealerZug(() => {
             if (
               dealerPunkte > 21 ||
               dealerPunkte < spielerPunkte ||
               spielerPunkte === 21
             ) {
-              console.log('Glückwunsch! Du hast gewonnen.')
+              console.log('Glückwunsch! Du hast gewonnen.');
               if (spielerPunkte === 21) {
-                console.log('Blackjack.')
-                spielerCoins += aktuellerEinsatz * 2
+                console.log('Blackjack.');
+                spielerCoins += aktuellerEinsatz * 2;
               } else {
-                spielerCoins += aktuellerEinsatz
+                spielerCoins += aktuellerEinsatz;
               }
             } else if (dealerPunkte === spielerPunkte) {
-              console.log('Unentschieden! Niemand gewinnt.')
+              console.log('Unentschieden! Niemand gewinnt.');
             } else {
-              console.log('Dealer gewinnt! Du hast verloren.')
-              spielerCoins -= aktuellerEinsatz
+              console.log('Dealer gewinnt! Du hast verloren.');
+              spielerCoins -= aktuellerEinsatz;
             }
-            console.log(`Du hast jetzt ${spielerCoins} Coins.\n`)
-            beendeSpiel()
-            break
-  
-          case 'double':
-            // Der Spieler verdoppelt seinen Einsatz und zieht eine Karte.
-            aktuellerEinsatz *= 2
-            console.log(
-              `Du hast deinen Einsatz verdoppelt. Neuer Einsatz: ${aktuellerEinsatz} Coins.`
-            )
-            const karte = randomKarte()
-            spielerHand.push(karte)
-            spielerPunkte = berechnePunkte(spielerHand)
-            zeigeSpielerHand(spielerHand)
-  
-            // Überprüft, ob der Spieler mehr als 21 Punkte hat.
-            if (spielerPunkte > 21) {
-              console.log('Du hast verloren! Du hast mehr als 21 Punkte.')
-              spielerCoins -= aktuellerEinsatz
-              beendeSpiel()
-            } else {
-              // Wenn der Spieler weniger als 21 Punkte hat, geht das Spiel weiter.
-              dealerZug()
-            }
-            break
-  
-      
-        }
-      })
+            console.log(`Du hast jetzt ${spielerCoins} Coins.\n`);
+            beendeSpiel();
+          });
+          break;
 
-  // ******************************************************************** end
+        case 'double':
+          aktuellerEinsatz *= 2;
+          console.log(
+            `Du hast deinen Einsatz verdoppelt. Neuer Einsatz: ${aktuellerEinsatz} Coins.`
+          );
+          const karte = randomKarte();
+          spielerHand.push(karte);
+          spielerPunkte = berechnePunkte(spielerHand);
+          zeigeSpielerHand(spielerHand);
 
- 
-  }
-  // Startet den Spielerzug.
+          if (spielerPunkte > 21) {
+            console.log('Du hast verloren! Du hast mehr als 21 Punkte.');
+            spielerCoins -= aktuellerEinsatz;
+            beendeSpiel();
+          } else {
+            dealerZug(() => {
+              if (
+                dealerPunkte > 21 ||
+                dealerPunkte < spielerPunkte ||
+                spielerPunkte === 21
+              ) {
+                console.log('Glückwunsch! Du hast gewonnen.');
+                if (spielerPunkte === 21) {
+                  console.log('Blackjack.');
+                  spielerCoins += aktuellerEinsatz * 2;
+                } else {
+                  spielerCoins += aktuellerEinsatz;
+                }
+              } else if (dealerPunkte === spielerPunkte) {
+                console.log('Unentschieden! Niemand gewinnt.');
+              } else {
+                console.log('Dealer gewinnt! Du hast verloren.');
+                spielerCoins -= aktuellerEinsatz;
+              }
+              console.log(`Du hast jetzt ${spielerCoins} Coins.\n`);
+              beendeSpiel();
+            });
+          }
+          break;
+      }
+    });
 }
-  
-  // Start des Spiels
-  neustart()
-  
+
+// Startet den Spielerzug.
+function spielStarten() {
+  showStartScreen(); // Willkommensbildschirm anzeigen
+  console.log(`Du hast ${spielerCoins} Anfangscoins.`);
+  starteSpiel(); // Spiel starten
+}
+
+spielStarten(); // Spiel starten
